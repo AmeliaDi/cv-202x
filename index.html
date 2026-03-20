@@ -1000,41 +1000,6 @@
     .certs-grid { grid-template-columns: 1fr; }
   }
 
-  /* ---- FADE IN ON SCROLL ---- */
-  .reveal {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* Stagger grid children */
-  .reveal.visible .skill-cell:nth-child(1), .reveal.visible .project-item:nth-child(1), .reveal.visible .research-card:nth-child(1), .reveal.visible .exp-item:nth-child(1), .reveal.visible .cert-item:nth-child(1) { transition-delay: 0.1s; }
-  .reveal.visible .skill-cell:nth-child(2), .reveal.visible .project-item:nth-child(2), .reveal.visible .research-card:nth-child(2), .reveal.visible .exp-item:nth-child(2), .reveal.visible .cert-item:nth-child(2) { transition-delay: 0.2s; }
-  .reveal.visible .skill-cell:nth-child(3), .reveal.visible .project-item:nth-child(3), .reveal.visible .research-card:nth-child(3), .reveal.visible .exp-item:nth-child(3), .reveal.visible .cert-item:nth-child(3) { transition-delay: 0.3s; }
-  .reveal.visible .skill-cell:nth-child(4), .reveal.visible .project-item:nth-child(4), .reveal.visible .research-card:nth-child(4), .reveal.visible .exp-item:nth-child(4), .reveal.visible .cert-item:nth-child(4) { transition-delay: 0.4s; }
-  .reveal.visible .skill-cell:nth-child(5), .reveal.visible .project-item:nth-child(5), .reveal.visible .research-card:nth-child(5), .reveal.visible .exp-item:nth-child(5), .reveal.visible .cert-item:nth-child(5) { transition-delay: 0.5s; }
-  .reveal.visible .skill-cell:nth-child(6), .reveal.visible .project-item:nth-child(6), .reveal.visible .research-card:nth-child(6), .reveal.visible .exp-item:nth-child(6), .reveal.visible .cert-item:nth-child(6) { transition-delay: 0.6s; }
-  .reveal.visible .skill-cell:nth-child(7), .reveal.visible .project-item:nth-child(7), .reveal.visible .research-card:nth-child(7), .reveal.visible .exp-item:nth-child(7), .reveal.visible .cert-item:nth-child(7) { transition-delay: 0.7s; }
-  .reveal.visible .skill-cell:nth-child(8), .reveal.visible .project-item:nth-child(8), .reveal.visible .research-card:nth-child(8), .reveal.visible .exp-item:nth-child(8), .reveal.visible .cert-item:nth-child(8) { transition-delay: 0.8s; }
-  .reveal.visible .skill-cell:nth-child(9), .reveal.visible .project-item:nth-child(9), .reveal.visible .research-card:nth-child(9), .reveal.visible .exp-item:nth-child(9), .reveal.visible .cert-item:nth-child(9) { transition-delay: 0.9s; }
-
-  /* Children start hidden and fade up */
-  .skill-cell, .project-item, .research-card, .exp-item, .cert-item {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s, padding-left 0.4s, border-color 0.4s;
-  }
-  
-  .reveal.visible .skill-cell, .reveal.visible .project-item, .reveal.visible .research-card, .reveal.visible .exp-item, .reveal.visible .cert-item {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
   /* ---- RESPONSIVE ---- */
   @media (max-width: 900px) {
     .hero { grid-template-columns: 1fr; }
@@ -1542,13 +1507,59 @@
   <a href="https://github.com/AmeliaDi/technical-cv" target="_blank">Source ↗</a>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <script>
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(el => {
-      if (el.isIntersecting) el.target.classList.add('visible');
-    });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Parallax for hero blobs
+  gsap.to(".organic-ring:nth-child(1)", { y: -80, x: -30, ease: "none", scrollTrigger: { trigger: ".hero", scrub: true, start: "top top", end: "bottom top" }});
+  gsap.to(".organic-ring:nth-child(2)", { y: -40, x: 40, ease: "none", scrollTrigger: { trigger: ".hero", scrub: true, start: "top top", end: "bottom top" }});
+  gsap.to(".organic-ring:nth-child(3)", { y: -100, x: 10, ease: "none", scrollTrigger: { trigger: ".hero", scrub: true, start: "top top", end: "bottom top" }});
+
+  // Fade up sections with stagger
+  const sections = gsap.utils.toArray('.reveal');
+  
+  sections.forEach(sec => {
+    // Determine children to stagger
+    let children = sec.querySelectorAll('.metric, .skill-cell, .project-item, .research-card, .exp-item, .cert-item');
+    
+    if (children.length > 0) {
+      // First animate the section label/title
+      gsap.fromTo(sec.querySelector('.section-label, h2'), 
+        { opacity: 0, y: 30 }, 
+        { opacity: 1, y: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: sec, start: "top 85%" } }
+      );
+      
+      // Then stagger the children
+      gsap.fromTo(children, 
+        { opacity: 0, y: 30 }, 
+        { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: "power2.out", scrollTrigger: { trigger: sec, start: "top 75%" } }
+      );
+    } else {
+      // Simple section animation
+      gsap.fromTo(sec.children,
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 1, stagger: 0.2, ease: "power3.out", scrollTrigger: { trigger: sec, start: "top 80%" } }
+      );
+    }
+  });
+
+  // Special education blob parallax
+  gsap.to(".edu-blob", {
+    yPercent: 30,
+    ease: "none",
+    scrollTrigger: {
+      trigger: ".education",
+      scrub: true
+    }
+  });
+
+  // Special gahtita parallax text
+  gsap.fromTo(".gahtita-terminal",
+    { y: 50 },
+    { y: -20, ease: "none", scrollTrigger: { trigger: ".gahtita", scrub: true } }
+  );
 </script>
 </body>
 </html>

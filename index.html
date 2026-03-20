@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amelia Enora — Systems Developer & Artist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Libre+Baskerville:ital@1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e8;
+    --parchment: #ede5d0;
+    --warm-tan: #c4a882;
+    --clay: #a07850;
+    --bark: #6b4f35;
+    --ink: #2c1f14;
+    --moss: #7a8c6e;
+    --dust: #b5a898;
+    --blush: #d4bfa8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { 
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  body {
+    background-color: var(--cream);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    overflow-y: auto;
+    cursor: default;
+    min-height: 100vh;
+  }
+
+  /* Grain texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.6;
+  }
+
+  /* ---- HERO ---- */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 4rem 3rem 4rem 5vw;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Organic blob background for right */
+  .hero-right::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 80% at 70% 50%, var(--parchment) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 30% 80%, var(--blush) 0%, transparent 60%);
+  }
+
+  .organic-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 420px;
+    height: 420px;
+    border-radius: 60% 40% 55% 45% / 45% 55% 40% 60%;
+    border: 1.5px solid var(--warm-tan);
+    opacity: 0.5;
+    animation: morph 12s ease-in-out infinite;
+  }
+
+  .organic-ring:nth-child(2) {
+    width: 320px;
+    height: 320px;
+    border-radius: 40% 60% 45% 55% / 55% 45% 60% 40%;
+    border-color: var(--clay);
+    opacity: 0.3;
+    animation-duration: 9s;
+    animation-direction: reverse;
+  }
+
+  .organic-ring:nth-child(3) {
+    width: 220px;
+    height: 220px;
+    border-radius: 55% 45% 40% 60% / 40% 60% 55% 45%;
+    border-color: var(--bark);
+    opacity: 0.2;
+    animation-duration: 15s;
+  }
+
+  @keyframes morph {
+    0%, 100% { border-radius: 60% 40% 55% 45% / 45% 55% 40% 60%; }
+    33% { border-radius: 40% 60% 30% 70% / 60% 40% 70% 30%; }
+    66% { border-radius: 70% 30% 60% 40% / 30% 70% 45% 55%; }
+  }
+
+  .hero-quote {
+    font-family: 'Libre Baskerville', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--dust);
+    letter-spacing: 0.02em;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 1s 0.3s forwards;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(3rem, 5vw, 5.5rem);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    opacity: 0;
+    animation: fadeUp 1s 0.5s forwards;
+  }
+
+  .hero-name em {
+    font-weight: 600;
+    font-style: normal;
+    color: var(--bark);
+  }
+
+  .hero-role {
+    margin-top: 1.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--clay);
+    opacity: 0;
+    animation: fadeUp 1s 0.7s forwards;
+  }
+
+  .hero-links {
+    margin-top: 3rem;
+    display: flex;
+    gap: 2rem;
+    opacity: 0;
+    animation: fadeUp 1s 0.9s forwards;
+  }
+
+  .hero-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--bark);
+    text-decoration: none;
+    border-bottom: 1px solid var(--warm-tan);
+    padding-bottom: 2px;
+    transition: color 0.3s, border-color 0.3s;
+  }
+
+  .hero-links a:hover {
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Floating label in hero-right */
+  .hero-tagline {
+    position: absolute;
+    bottom: 4rem;
+    right: 3rem;
+    text-align: right;
+    opacity: 0;
+    animation: fadeUp 1s 1.1s forwards;
+  }
+
+  .hero-tagline p {
+    font-family: 'Libre Baskerville', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--bark);
+    line-height: 1.5;
+  }
+
+  .hero-tagline small {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dust);
+    display: block;
+    margin-top: 0.5rem;
+  }
+
+  /* scroll indicator */
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 1s 1.3s forwards;
+  }
+
+  .scroll-hint span {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dust);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--warm-tan), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.2); }
+  }
+
+  /* ---- SECTION COMMON ---- */
+  section {
+    padding: 6rem 5vw;
+    position: relative;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--warm-tan), transparent);
+    max-width: 200px;
+  }
+
+  /* ---- ABOUT ---- */
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 6rem;
+    align-items: start;
+    background: var(--parchment);
+    padding: 6rem 5vw;
+  }
+
+  .about-side {
+    position: sticky;
+    top: 4rem;
+  }
+
+  .about-side .section-label { margin-bottom: 2rem; }
+
+  .about-side-text {
+    font-size: 0.8rem;
+    font-family: 'DM Mono', monospace;
+    font-weight: 300;
+    color: var(--dust);
+    line-height: 2;
+  }
+
+  .about-body p {
+    font-size: 1.35rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+
+  .about-body p strong {
+    font-weight: 600;
+    color: var(--bark);
+  }
+
+  .about-body p em {
+    font-style: italic;
+    color: var(--clay);
+  }
+
+  /* ---- SKILLS ---- */
+  .skills {
+    background: var(--cream);
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 0;
+    background: var(--warm-tan);
+    border: 1px solid var(--warm-tan);
+  }
+
+  .skill-cell {
+    background: var(--cream);
+    padding: 2.5rem 2rem;
+    transition: background 0.4s;
+  }
+
+  .skill-cell:hover {
+    background: var(--parchment);
+  }
+
+  .skill-cell h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: 1.2rem;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 300;
+    color: var(--bark);
+    border: 1px solid var(--blush);
+    padding: 0.25rem 0.6rem;
+    border-radius: 2px;
+    transition: border-color 0.3s, color 0.3s;
+  }
+
+  .skill-cell:hover .tag {
+    border-color: var(--warm-tan);
+    color: var(--ink);
+  }
+
+  /* ---- PROJECTS ---- */
+  .projects {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 6rem 5vw;
+  }
+
+  .projects .section-label {
+    color: var(--warm-tan);
+  }
+
+  .projects .section-label::after {
+    background: linear-gradient(to right, var(--clay), transparent);
+  }
+
+  .projects-list {
+    display: grid;
+    gap: 0;
+  }
+
+  .project-item {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    align-items: center;
+    padding: 2rem 0;
+    border-bottom: 1px solid rgba(196, 168, 130, 0.2);
+    cursor: default;
+    transition: padding-left 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--warm-tan);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.4s;
+  }
+
+  .project-item:hover {
+    padding-left: 1.5rem;
+  }
+
+  .project-item:hover::before {
+    transform: scaleY(1);
+  }
+
+  .project-name {
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: var(--cream);
+    letter-spacing: -0.01em;
+  }
+
+  .project-name em {
+    font-style: italic;
+    color: var(--warm-tan);
+  }
+
+  .project-desc {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 300;
+    color: var(--dust);
+    margin-top: 0.4rem;
+    letter-spacing: 0.05em;
+  }
+
+  .project-tags {
+    display: flex;
+    gap: 0.4rem;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+
+  .project-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--dust);
+    padding: 0.2rem 0.5rem;
+    border: 1px solid rgba(196, 168, 130, 0.25);
+  }
+
+  /* ---- RESEARCH ---- */
+  .research {
+    background: var(--parchment);
+    padding: 6rem 5vw;
+  }
+
+  .research-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 0;
+  }
+
+  .research-card {
+    background: var(--cream);
+    border: 1px solid var(--blush);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.4s, transform 0.4s;
+  }
+
+  .research-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(to right, var(--warm-tan), var(--moss));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+
+  .research-card:hover {
+    border-color: var(--warm-tan);
+    transform: translateY(-4px);
+  }
+
+  .research-card:hover::after {
+    transform: scaleX(1);
+  }
+
+  .research-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--dust);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .research-title {
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+
+  .research-abstract {
+    font-size: 0.95rem;
+    color: var(--clay);
+    line-height: 1.6;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+  }
+
+  .research-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--dust);
+    letter-spacing: 0.08em;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .research-meta a {
+    color: var(--clay);
+    text-decoration: none;
+    border-bottom: 1px solid var(--blush);
+    transition: color 0.3s;
+  }
+
+  .research-meta a:hover { color: var(--bark); }
+
+  /* ---- EDUCATION ---- */
+  .education {
+    background: var(--cream);
+    padding: 5rem 5vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .edu-text h2 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+
+  .edu-text h2 em {
+    font-style: italic;
+    color: var(--bark);
+  }
+
+  .edu-text p {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 300;
+    color: var(--clay);
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+  }
+
+  .edu-visual {
+    position: relative;
+    height: 300px;
+  }
+
+  .edu-blob {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 60% 40% 55% 45% / 45% 55% 40% 60%;
+    background: radial-gradient(ellipse at 40% 40%, var(--parchment), var(--blush));
+    animation: morph 10s ease-in-out infinite;
+  }
+
+  .edu-blob:nth-child(1) { width: 200px; height: 200px; animation-delay: 0s; }
+  .edu-blob:nth-child(2) { width: 130px; height: 130px; animation-delay: -3s; animation-direction: reverse; background: radial-gradient(ellipse, var(--warm-tan), transparent); opacity: 0.4; }
+
+  .edu-center-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 2;
+  }
+
+  .edu-center-text span {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--bark);
+    display: block;
+  }
+
+  .edu-center-text strong {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--ink);
+    display: block;
+    margin-top: 0.3rem;
+    line-height: 1.2;
+  }
+
+  /* ---- METRICS ---- */
+  .metrics {
+    background: var(--bark);
+    padding: 4rem 5vw;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+  }
+
+  .metric {
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .metric-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1;
+    display: block;
+  }
+
+  .metric-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blush);
+    margin-top: 0.5rem;
+    display: block;
+  }
+
+  /* ---- CONTACT ---- */
+  .contact {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 6rem 5vw;
+    background: var(--cream);
+    position: relative;
+  }
+
+  .contact-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    border-radius: 60% 40% 55% 45% / 45% 55% 40% 60%;
+    border: 1px solid var(--blush);
+    opacity: 0.5;
+    animation: morph 14s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  .contact h2 {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .contact h2 em {
+    font-style: italic;
+    color: var(--bark);
+  }
+
+  .contact-subtitle {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .contact-links {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .contact-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    padding: 0.8rem 1.5rem;
+    border: 1px solid var(--warm-tan);
+    transition: all 0.4s;
+    background: transparent;
+  }
+
+  .contact-link:hover {
+    background: var(--ink);
+    color: var(--cream);
+    border-color: var(--ink);
+  }
+
+  .contact-link.primary {
+    background: var(--bark);
+    color: var(--cream);
+    border-color: var(--bark);
+  }
+
+  .contact-link.primary:hover {
+    background: var(--ink);
+    border-color: var(--ink);
+  }
+
+  /* ---- EXPERIENCE ---- */
+  .experience {
+    background: var(--cream);
+    padding: 6rem 5vw;
+  }
+
+  .exp-list {
+    display: grid;
+    gap: 0;
+    margin-top: 0;
+  }
+
+  .exp-item {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 2.5rem;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--blush);
+    align-items: start;
+    transition: padding-left 0.3s;
+  }
+
+  .exp-item:hover { padding-left: 0.8rem; }
+
+  .exp-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--dust);
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+    padding-top: 0.2rem;
+  }
+
+  .exp-date strong {
+    display: block;
+    color: var(--clay);
+    font-weight: 400;
+    margin-bottom: 0.3rem;
+  }
+
+  .exp-body h3 {
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+  }
+
+  .exp-body h3 em {
+    font-style: italic;
+    color: var(--bark);
+  }
+
+  .exp-company {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: 0.6rem;
+  }
+
+  .exp-desc {
+    font-size: 0.95rem;
+    color: var(--bark);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  /* ---- CERTIFICATIONS ---- */
+  .certs {
+    background: var(--parchment);
+    padding: 6rem 5vw;
+  }
+
+  .certs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--blush);
+    border: 1px solid var(--blush);
+  }
+
+  .cert-item {
+    background: var(--parchment);
+    padding: 1.8rem;
+    transition: background 0.3s;
+  }
+
+  .cert-item:hover { background: var(--cream); }
+
+  .cert-issuer {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: 0.6rem;
+  }
+
+  .cert-name {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+
+  .cert-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    color: var(--dust);
+    margin-top: 0.5rem;
+  }
+
+  /* ---- GAHTITA ---- */
+  .gahtita {
+    background: #0d2a14;
+    padding: 6rem 5vw;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .gahtita::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 70% at 80% 50%, rgba(74, 120, 50, 0.15) 0%, transparent 70%);
+  }
+
+  .gahtita .section-label {
+    color: #7ab84a;
+  }
+
+  .gahtita .section-label::after {
+    background: linear-gradient(to right, #4a7832, transparent);
+  }
+
+  .gahtita-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .gahtita-text h2 {
+    font-family: 'DM Mono', monospace;
+    font-size: 3.5rem;
+    font-weight: 400;
+    color: #a8d878;
+    letter-spacing: 0.15em;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .gahtita-text .sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #5a8a3a;
+    margin-bottom: 2rem;
+  }
+
+  .gahtita-text p {
+    font-size: 1.05rem;
+    color: #8ab870;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .gahtita-text a {
+    display: inline-block;
+    margin-top: 1.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #a8d878;
+    text-decoration: none;
+    border: 1px solid #4a7832;
+    padding: 0.6rem 1.2rem;
+    transition: all 0.3s;
+  }
+
+  .gahtita-text a:hover {
+    background: #4a7832;
+    color: #c8f0a0;
+  }
+
+  .gahtita-terminal {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid #2a5a1a;
+    padding: 1.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: #6ab048;
+    line-height: 2;
+    letter-spacing: 0.05em;
+  }
+
+  .gahtita-terminal .prompt {
+    color: #4a8a2a;
+  }
+
+  .gahtita-terminal .value {
+    color: #a8d878;
+  }
+
+  /* ---- FOOTER ---- */
+  footer {
+    background: var(--ink);
+    color: var(--dust);
+    padding: 2rem 5vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  footer a {
+    color: var(--warm-tan);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  footer a:hover { color: var(--cream); }
+
+  @media (max-width: 900px) {
+    .gahtita-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .certs-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    .certs-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ---- FADE IN ON SCROLL ---- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Stagger grid children */
+  .reveal.visible .skill-cell:nth-child(1), .reveal.visible .project-item:nth-child(1), .reveal.visible .research-card:nth-child(1), .reveal.visible .exp-item:nth-child(1), .reveal.visible .cert-item:nth-child(1) { transition-delay: 0.1s; }
+  .reveal.visible .skill-cell:nth-child(2), .reveal.visible .project-item:nth-child(2), .reveal.visible .research-card:nth-child(2), .reveal.visible .exp-item:nth-child(2), .reveal.visible .cert-item:nth-child(2) { transition-delay: 0.2s; }
+  .reveal.visible .skill-cell:nth-child(3), .reveal.visible .project-item:nth-child(3), .reveal.visible .research-card:nth-child(3), .reveal.visible .exp-item:nth-child(3), .reveal.visible .cert-item:nth-child(3) { transition-delay: 0.3s; }
+  .reveal.visible .skill-cell:nth-child(4), .reveal.visible .project-item:nth-child(4), .reveal.visible .research-card:nth-child(4), .reveal.visible .exp-item:nth-child(4), .reveal.visible .cert-item:nth-child(4) { transition-delay: 0.4s; }
+  .reveal.visible .skill-cell:nth-child(5), .reveal.visible .project-item:nth-child(5), .reveal.visible .research-card:nth-child(5), .reveal.visible .exp-item:nth-child(5), .reveal.visible .cert-item:nth-child(5) { transition-delay: 0.5s; }
+  .reveal.visible .skill-cell:nth-child(6), .reveal.visible .project-item:nth-child(6), .reveal.visible .research-card:nth-child(6), .reveal.visible .exp-item:nth-child(6), .reveal.visible .cert-item:nth-child(6) { transition-delay: 0.6s; }
+  .reveal.visible .skill-cell:nth-child(7), .reveal.visible .project-item:nth-child(7), .reveal.visible .research-card:nth-child(7), .reveal.visible .exp-item:nth-child(7), .reveal.visible .cert-item:nth-child(7) { transition-delay: 0.7s; }
+  .reveal.visible .skill-cell:nth-child(8), .reveal.visible .project-item:nth-child(8), .reveal.visible .research-card:nth-child(8), .reveal.visible .exp-item:nth-child(8), .reveal.visible .cert-item:nth-child(8) { transition-delay: 0.8s; }
+  .reveal.visible .skill-cell:nth-child(9), .reveal.visible .project-item:nth-child(9), .reveal.visible .research-card:nth-child(9), .reveal.visible .exp-item:nth-child(9), .reveal.visible .cert-item:nth-child(9) { transition-delay: 0.9s; }
+
+  /* Children start hidden and fade up */
+  .skill-cell, .project-item, .research-card, .exp-item, .cert-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s, padding-left 0.4s, border-color 0.4s;
+  }
+  
+  .reveal.visible .skill-cell, .reveal.visible .project-item, .reveal.visible .research-card, .reveal.visible .exp-item, .reveal.visible .cert-item {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 4rem 1.5rem; justify-content: flex-end; min-height: 100vh; }
+    .about { grid-template-columns: 1fr; gap: 2rem; }
+    .about-side { position: static; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+    .research-cards { grid-template-columns: 1fr; }
+    .education { grid-template-columns: 1fr; }
+    .edu-visual { height: 200px; }
+    .metrics { grid-template-columns: 2fr 2fr; }
+    footer { flex-direction: column; gap: 0.8rem; text-align: center; }
+    .project-item { grid-template-columns: 1fr; }
+    .project-tags { justify-content: flex-start; margin-top: 0.8rem; }
+  }
+
+  @media (max-width: 600px) {
+    .skills-grid { grid-template-columns: 1fr; }
+    .metrics { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-quote">"every algorithm is a brushstroke"</p>
+    <h1 class="hero-name">Amelia<br><em>Enora</em></h1>
+    <p class="hero-role">Developer &nbsp;·&nbsp; Security Researcher &nbsp;·&nbsp; Artist &nbsp;·&nbsp; Matemática</p>
+    <nav class="hero-links">
+      <a href="https://github.com/AmeliaDi" target="_blank">GitHub</a>
+      <a href="https://linkedin.com/in/bogosort" target="_blank">LinkedIn</a>
+      <a href="mailto:enorastrokes@gmail.com">Email</a>
+      <a href="https://gah-ta.vercel.app" target="_blank">GAHTITA ↗</a>
+    </nav>
+  </div>
+
+  <div class="hero-right">
+    <div class="organic-ring"></div>
+    <div class="organic-ring"></div>
+    <div class="organic-ring"></div>
+    <div class="hero-tagline">
+      <p>only an artist<br>doing some programming</p>
+      <small>Universidad Nacional Autónoma de México</small>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ══════════ METRICS STRIP ══════════ -->
+<div class="metrics reveal">
+  <div class="metric">
+    <span class="metric-number">11+</span>
+    <span class="metric-label">Años como Hacker</span>
+  </div>
+  <div class="metric">
+    <span class="metric-number">82k</span>
+    <span class="metric-label">Lines of Code</span>
+  </div>
+  <div class="metric">
+    <span class="metric-number">12</span>
+    <span class="metric-label">Años como Artista</span>
+  </div>
+  <div class="metric">
+    <span class="metric-number">2</span>
+    <span class="metric-label">Papers Publicados</span>
+  </div>
+</div>
+
+<!-- ══════════ ABOUT ══════════ -->
+<section class="about reveal">
+  <div class="about-side">
+    <p class="section-label">About</p>
+    <p class="about-side-text">
+      Querétaro / CDMX<br>
+      enorastrokes@gmail.com<br><br>
+      EN / ES
+    </p>
+  </div>
+  <div class="about-body">
+    <p>I live between <strong>two languages</strong> — the one with only 0s and 1s, and the one that paints worlds on a canvas.</p>
+    <p>My work spans the entire stack from <strong>bare-metal firmware</strong> to quantum circuit design. I write kernels, compilers, cryptographic engines, and neural networks in Assembly — not because I have to, but because I find beauty in the constraints.</p>
+    <p>At the same time, I publish research on <em>prime numbers in complex planes</em> and propose quantum circuits that evaluate Wilson's Theorem in superposition. Math, to me, is another kind of art.</p>
+    <p>I believe the most interesting things happen at the edges — between disciplines, between abstraction levels, between the poetic and the precise.</p>
+  </div>
+</section>
+
+<!-- ══════════ EXPERIENCE ══════════ -->
+<section class="experience reveal">
+  <p class="section-label">Experiencia</p>
+  <div class="exp-list">
+
+    <div class="exp-item">
+      <div class="exp-date">
+        <strong>2025 – Present</strong>
+        Full-time · Hybrid
+      </div>
+      <div class="exp-body">
+        <h3><em>Developer</em></h3>
+        <p class="exp-company">Mamut Capital</p>
+        <p class="exp-desc">Desarrollo de software en entorno financiero. Implementación de soluciones técnicas en stack híbrido.</p>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">
+        <strong>2021 – Present</strong>
+        Freelance · Remote · 4+ años
+      </div>
+      <div class="exp-body">
+        <h3><em>Cyber Security Architect</em></h3>
+        <p class="exp-company">Autónoma</p>
+        <p class="exp-desc">Diseño de arquitecturas de seguridad, auditorías, hardening de sistemas. Certificada CISM. Especialista en seguridad a nivel de kernel, redes y criptografía.</p>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">
+        <strong>2016 – Present</strong>
+        Self-employed · 9+ años
+      </div>
+      <div class="exp-body">
+        <h3><em>Artista</em></h3>
+        <p class="exp-company">Práctica independiente</p>
+        <p class="exp-desc">Arte visual, pintura, instalación. Formación en INBA y MoMA. La práctica artística como un segundo lenguaje de pensamiento — paralelo al código.</p>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">
+        <strong>2015 – Present</strong>
+        Autónoma · 11+ años
+      </div>
+      <div class="exp-body">
+        <h3><em>Hacker</em></h3>
+        <p class="exp-company">Independiente</p>
+        <p class="exp-desc">Investigación en seguridad ofensiva y defensiva, ensamblaje de hardware a medida, customización de sistemas. La exploración como metodología.</p>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">
+        <strong>Jun–Oct 2023</strong>
+        Full-time · México · 5 meses
+      </div>
+      <div class="exp-body">
+        <h3><em>Cyber Security Specialist</em></h3>
+        <p class="exp-company">Grupo CIRTEC — Círculo Tecnológico de México</p>
+        <p class="exp-desc">Risk assessment, threat monitoring, VPN deployment, security audits, malware removal. Training de usuarios en seguridad. Compliance con estándares legales y de seguridad corporativa.</p>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">
+        <strong>2020 – 2022</strong>
+        Freelance · 2 años
+      </div>
+      <div class="exp-body">
+        <h3><em>C Developer</em></h3>
+        <p class="exp-company">Freelance</p>
+        <p class="exp-desc">Resolución de bug reports, desarrollo en múltiples lenguajes de programación de bajo nivel. Verificación y corrección de issues en sistemas.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ GAHTITA ══════════ -->
+<section class="gahtita reveal">
+  <p class="section-label">Proyecto destacado</p>
+  <div class="gahtita-inner">
+    <div class="gahtita-text">
+      <h2>GAHTITA</h2>
+      <p class="sub">Terapia Hormonal de Afirmación de Género</p>
+      <p>Una herramienta de código abierto para personas trans y no-binarias. Diseñada con rigor científico (WPATH SOC-8 compliant), protocolos DIY HRT verificados, y recursos de crisis integrados.</p>
+      <p style="margin-top:1rem;">Tecnología al servicio de quien más la necesita — donde la programación se vuelve acto de cuidado.</p>
+      <a href="https://gah-ta.vercel.app" target="_blank">[ Ver proyecto ↗ ]</a>
+    </div>
+    <div class="gahtita-terminal">
+      <div><span class="prompt">›</span> STATUS: <span class="value">ONLINE</span></div>
+      <div><span class="prompt">›</span> SYSTEM: <span class="value">WPATH SOC-8 COMPLIANT</span></div>
+      <div><span class="prompt">›</span> PROTOCOL: <span class="value">DIY HRT VERIFIED</span></div>
+      <div><span class="prompt">›</span> TARGET: <span class="value">TRANS & NON-BINARY HUMANS</span></div>
+      <div><span class="prompt">›</span> STACK: <span class="value">VERCEL / JS / HTML</span></div>
+      <div><span class="prompt">›</span> SOS: <span class="value">THE TREVOR PROJECT</span></div>
+    </div>
+  </div>
+</section>
+<section class="skills reveal">
+  <p class="section-label">Technical Expertise</p>
+  <div class="skills-grid">
+    <div class="skill-cell">
+      <h3>Languages</h3>
+      <div class="skill-tags">
+        <span class="tag">C</span>
+        <span class="tag">C++</span>
+        <span class="tag">Rust</span>
+        <span class="tag">x86 ASM</span>
+        <span class="tag">ARM ASM</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">Python</span>
+        <span class="tag">OpenQASM 3.0</span>
+      </div>
+    </div>
+    <div class="skill-cell">
+      <h3>Systems & Kernels</h3>
+      <div class="skill-tags">
+        <span class="tag">Linux Kernel</span>
+        <span class="tag">eBPF / XDP</span>
+        <span class="tag">UEFI</span>
+        <span class="tag">Hypervisors</span>
+        <span class="tag">GPU Drivers</span>
+        <span class="tag">Custom OS</span>
+        <span class="tag">WebAssembly</span>
+      </div>
+    </div>
+    <div class="skill-cell">
+      <h3>Security Research</h3>
+      <div class="skill-tags">
+        <span class="tag">Rootkits</span>
+        <span class="tag">Reverse Engineering</span>
+        <span class="tag">Exploit Dev</span>
+        <span class="tag">SMC Patching</span>
+        <span class="tag">Bootkit</span>
+        <span class="tag">Vulnerability Scanning</span>
+      </div>
+    </div>
+    <div class="skill-cell">
+      <h3>Cryptography</h3>
+      <div class="skill-tags">
+        <span class="tag">ChaCha20-Poly1305</span>
+        <span class="tag">Post-Quantum</span>
+        <span class="tag">Homomorphic</span>
+        <span class="tag">Quantum Protocols</span>
+        <span class="tag">AES / ARM NEON</span>
+      </div>
+    </div>
+    <div class="skill-cell">
+      <h3>Compilers & Runtime</h3>
+      <div class="skill-tags">
+        <span class="tag">JIT (SSA)</span>
+        <span class="tag">LLM Inference</span>
+        <span class="tag">ARM Optimization</span>
+        <span class="tag">Memory Allocators</span>
+        <span class="tag">Debuggers</span>
+      </div>
+    </div>
+    <div class="skill-cell">
+      <h3>Networking & ML</h3>
+      <div class="skill-tags">
+        <span class="tag">TCP/IP Stack</span>
+        <span class="tag">Packet Analysis</span>
+        <span class="tag">Neural Networks</span>
+        <span class="tag">Assembly ML</span>
+        <span class="tag">Speculative Decoding</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ PROJECTS ══════════ -->
+<section class="projects reveal">
+  <p class="section-label">Selected Projects</p>
+  <div class="projects-list">
+
+    <div class="project-item">
+      <div>
+        <p class="project-name"><em>eBPF/XDP Firewall</em></p>
+        <p class="project-desc">High-performance packet filtering at 40+ Gbps with zero-copy processing</p>
+      </div>
+      <div class="project-tags">
+        <span class="project-tag">C</span>
+        <span class="project-tag">eBPF</span>
+        <span class="project-tag">Networking</span>
+      </div>
+    </div>
+
+    <div class="project-item">
+      <div>
+        <p class="project-name"><em>ARM Cryptography Suite</em></p>
+        <p class="project-desc">Post-quantum algorithms with homomorphic encryption — 22+ GB/s throughput</p>
+      </div>
+      <div class="project-tags">
+        <span class="project-tag">ARM ASM</span>
+        <span class="project-tag">Crypto</span>
+        <span class="project-tag">NEON</span>
+      </div>
+    </div>
+
+    <div class="project-item">
+      <div>
+        <p class="project-name"><em>Quantum Cryptography QASM</em></p>
+        <p class="project-desc">Revolutionary quantum protocols in OpenQASM 3.0 — linked to Brighid research</p>
+      </div>
+      <div class="project-tags">
+        <span class="project-tag">OpenQASM</span>
+        <span class="project-tag">Quantum</span>
+        <span class="project-tag">Grover</span>
+      </div>
+    </div>
+
+    <div class="project-item">
+      <div>
+        <p class="project-name"><em>ARM LLM Runtime</em></p>
+        <p class="project-desc">Optimized LLM inference engine with speculative decoding — 234+ tokens/sec</p>
+      </div>
+      <div class="project-tags">
+        <span class="project-tag">ARM</span>
+        <span class="project-tag">ML</span>
+        <span class="project-tag">Inference</span>
+      </div>
+    </div>
+
+    <div class="project-item">
+      <div>
+        <p class="project-name"><em>Custom Memory Allocator</em></p>
+        <p class="project-desc">Advanced memory management achieving 50M+ operations per second</p>
+      </div>
+      <div class="project-tags">
+        <span class="project-tag">C</span>
+        <span class="project-tag">Perf</span>
+        <span class="project-tag">Systems</span>
+      </div>
+    </div>
+
+    <div class="project-item">
+      <div>
+        <p class="project-name"><em>Kernel Rootkit</em></p>
+        <p class="project-desc">Advanced Linux kernel module for security research — 99.9% stealth effectiveness</p>
+      </div>
+      <div class="project-tags">
+        <span class="project-tag">Kernel</span>
+        <span class="project-tag">Security</span>
+        <span class="project-tag">C</span>
+      </div>
+    </div>
+
+    <div class="project-item">
+      <div>
+        <p class="project-name"><em>Type-1 Hypervisor</em></p>
+        <p class="project-desc">Bare-metal virtualization implementation from scratch</p>
+      </div>
+      <div class="project-tags">
+        <span class="project-tag">x86</span>
+        <span class="project-tag">VT-x</span>
+        <span class="project-tag">C</span>
+      </div>
+    </div>
+
+    <div class="project-item">
+      <div>
+        <p class="project-name"><em>JIT Compiler</em></p>
+        <p class="project-desc">Just-in-time compilation with SSA form optimization and native code generation</p>
+      </div>
+      <div class="project-tags">
+        <span class="project-tag">Compilers</span>
+        <span class="project-tag">SSA</span>
+        <span class="project-tag">C++</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ RESEARCH ══════════ -->
+<section class="research reveal">
+  <p class="section-label">Published Research</p>
+  <div class="research-cards">
+
+    <div class="research-card">
+      <p class="research-number">Zenodo · 2026 · DOI 10.5281/zenodo.18837521</p>
+      <h3 class="research-title">Función de Brighid — Prime Identification on Complex Planes</h3>
+      <p class="research-abstract">A proposal for resolving prime number identification in complex planes. Introduces the Brighid function as a theoretical framework for extracting prime structure from the complex domain.</p>
+      <div class="research-meta">
+        <span>Math · Number Theory</span>
+        <span>UNAM</span>
+        <a href="https://zenodo.org/records/18837521" target="_blank">View on Zenodo ↗</a>
+      </div>
+    </div>
+
+    <div class="research-card">
+      <p class="research-number">Zenodo · 2026 · DOI 10.5281/zenodo.18842508</p>
+      <h3 class="research-title">Función de Brighid M(z) — Quantum Computing Domain</h3>
+      <p class="research-abstract">Extension of the Brighid function toward quantum computation. Proposes a reversible logic gate circuit to evaluate Wilson's Theorem in superposition. Coupling the Brighid Oracle with Grover's algorithm and Quantum Phase Estimation provides a theoretical framework to extract the n-th prime — bypassing classical combinatorial explosion.</p>
+      <div class="research-meta">
+        <span>Quantum Computing · Cryptography</span>
+        <span>UNAM</span>
+        <a href="https://zenodo.org/records/18842508" target="_blank">View on Zenodo ↗</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ EDUCATION ══════════ -->
+<section class="education reveal">
+  <div class="edu-text">
+    <p class="section-label">Formación</p>
+    <h2>Arte,<br>Ciencia<br><em>& Código</em></h2>
+    <p style="margin-top: 1.5rem; font-family:'DM Mono',monospace; font-size:0.72rem; color:var(--clay); letter-spacing:0.05em; line-height:2;">
+      UNAM — Lic. en Biología Matemática (2025–2029)<br>
+      MoMA — Doctor of Arts, Social Sciences (2022–2024)<br>
+      MoMA — BFA, Fine/Studio Arts (2017–2021)<br>
+      MoMA — Master of Arts<br>
+      INBA — Associate of Arts (2021–2022)<br>
+      UNITEC — Animación, VFX & Tecnología Interactiva (2017–2021)
+    </p>
+  </div>
+  <div class="edu-visual">
+    <div class="edu-blob"></div>
+    <div class="edu-blob"></div>
+    <div class="edu-center-text">
+      <span>formación en</span>
+      <strong>Arte + Ciencia</strong>
+      <span style="margin-top:0.3rem; font-size:0.55rem; letter-spacing:0.1em; color:var(--dust);">UNAM · MoMA · INBA · UNITEC</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CERTIFICATIONS ══════════ -->
+<section class="certs reveal">
+  <p class="section-label">Certificaciones Destacadas</p>
+  <div class="certs-grid">
+
+    <div class="cert-item">
+      <p class="cert-issuer">Cybrary</p>
+      <p class="cert-name">Certified Information Security Manager (CISM)</p>
+      <p class="cert-date">Julio 2023</p>
+    </div>
+
+    <div class="cert-item">
+      <p class="cert-issuer">Cybrary</p>
+      <p class="cert-name">Certified Information Systems Auditor (CISA)</p>
+      <p class="cert-date">Julio 2023</p>
+    </div>
+
+    <div class="cert-item">
+      <p class="cert-issuer">Cybrary · MITRE ATT&CK</p>
+      <p class="cert-name">MAD — Purple Teaming · SOC Assessments · Cyber Threat Intelligence</p>
+      <p class="cert-date">Julio 2023 · 3 credenciales</p>
+    </div>
+
+    <div class="cert-item">
+      <p class="cert-issuer">Cybrary · CompTIA</p>
+      <p class="cert-name">CompTIA CySA+ · Network+ · A+ · IT Fundamentals+</p>
+      <p class="cert-date">2022–2023</p>
+    </div>
+
+    <div class="cert-item">
+      <p class="cert-issuer">Skillsoft</p>
+      <p class="cert-name">ISO/IEC 27001 Information Security Associate</p>
+      <p class="cert-date">Octubre 2022</p>
+    </div>
+
+    <div class="cert-item">
+      <p class="cert-issuer">Cisco · Triplebyte</p>
+      <p class="cert-name">Introduction to Cybersecurity · Triplebyte Certified</p>
+      <p class="cert-date">2022</p>
+    </div>
+
+    <div class="cert-item">
+      <p class="cert-issuer">The Open University · Alison</p>
+      <p class="cert-name">Introduction to Complex Analysis · Diploma in Mathematics · Protocols in Multi-Service Networks</p>
+      <p class="cert-date">Julio 2023</p>
+    </div>
+
+    <div class="cert-item">
+      <p class="cert-issuer">APCC · PSYCOlógicaMENTE · Udemy</p>
+      <p class="cert-name">Experta en Psicopatologías · Especialista en Comunicación Terapéutica · CBT & Psychotherapy</p>
+      <p class="cert-date">2022–2025</p>
+    </div>
+
+    <div class="cert-item">
+      <p class="cert-issuer">MoMA · INBA</p>
+      <p class="cert-name">Modern & Contemporary Art · Fashion As Design · Fine Arts · Seeing Through Photographs</p>
+      <p class="cert-date">2023 · 5 credenciales</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ CONTACT ══════════ -->
+<section class="contact reveal">
+  <div class="contact-ring"></div>
+  <h2>Let's <em>create</em><br>something.</h2>
+  <p class="contact-subtitle">Open to collaboration · Research · Systems work</p>
+  <div class="contact-links">
+    <a href="mailto:enorastrokes@gmail.com" class="contact-link primary">Email</a>
+    <a href="https://linkedin.com/in/bogosort" target="_blank" class="contact-link">LinkedIn</a>
+    <a href="https://github.com/AmeliaDi" target="_blank" class="contact-link">GitHub</a>
+    <a href="https://gah-ta.vercel.app" target="_blank" class="contact-link">GAHTITA ↗</a>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <span>Amelia Enora Chavez Barroso · 2026</span>
+  <span><em>i know a language with two letters — 0 and 1</em></span>
+  <a href="https://github.com/AmeliaDi/technical-cv" target="_blank">Source ↗</a>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) el.target.classList.add('visible');
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-# Amelia Enora — Technical CV
+s# Amelia Enora — Technical CV
 
 Un currículum interactivo y orgánico, diseñado para reflejar la intersección entre código de bajo nivel, ciberseguridad y arte visual. 
 

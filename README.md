@@ -1,5 +1,5 @@
-s# Amelia Enora — Technical CV
-
+# Amelia Enora — Technical CV
+uwu
 Un currículum interactivo y orgánico, diseñado para reflejar la intersección entre código de bajo nivel, ciberseguridad y arte visual. 
 
 Este proyecto es una carta de presentación interactiva construida con tecnologías web estándar y enriquecida con animaciones cinemáticas mediante GSAP.
